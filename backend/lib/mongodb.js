@@ -1,11 +1,6 @@
 import mongoose from 'mongoose';
-import 'dotenv/config';
 
-const MONGODB_URI = process.env.MONGODB_URI;
-
-if (!MONGODB_URI) {
-  throw new Error('Please define the MONGODB_URI environment variable inside .env');
-}
+const getUri = () => process.env.MONGO_URI || process.env.MONGODB_URI;
 
 let cached = global.mongoose;
 
@@ -14,6 +9,15 @@ if (!cached) {
 }
 
 async function dbConnect() {
+  if (mongoose.connection.readyState === 1) {
+    return mongoose.connection;
+  }
+
+  const MONGODB_URI = getUri();
+  if (!MONGODB_URI) {
+    throw new Error('Define MONGO_URI (or MONGODB_URI) in .env');
+  }
+
   if (cached.conn) {
     return cached.conn;
   }
