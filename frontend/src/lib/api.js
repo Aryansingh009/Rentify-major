@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const raw = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000';
+const raw = process.env.NEXT_PUBLIC_API_URL || 'https://rentify-major.onrender.com';
 export const apiBaseUrl = raw.replace(/\/$/, '');
 
 const api = axios.create({
