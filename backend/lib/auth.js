@@ -6,8 +6,8 @@ const JWT_SECRET = process.env.JWT_SECRET || 'fallback-secret';
 
 const COOKIE_OPTS = {
   httpOnly: true,
-  secure: process.env.NODE_ENV === 'production',
-  sameSite: 'strict',
+  secure: true,
+  sameSite: 'none',
   maxAge: 7 * 24 * 60 * 60 * 1000,
   path: '/',
 };
@@ -43,5 +43,5 @@ export function setAuthCookie(res, token) {
 }
 
 export function removeAuthCookie(res) {
-  res.clearCookie('token', { path: '/' });
+  res.clearCookie('token', { path: '/', sameSite: 'none', secure: true });
 }
